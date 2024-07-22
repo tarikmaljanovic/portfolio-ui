@@ -1,0 +1,64 @@
+@use 'bulma/sass/utilities/mixins';
+@import 'bulma';
+
+
+.projects-carousel {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0px 50px;
+    padding-bottom: 50px;
+
+    @include mixins.mobile {
+        flex-direction: column;
+        padding: 0px 20px;
+    }
+
+    .carousel {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 20px;
+        
+        @include mixins.touch {
+            margin-top: 30px;
+        }
+        .carousel-section {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            @include mixins.touch {
+                flex-direction: column;
+            }
+            .image-container {
+                width: 540px;
+                height: 350px;
+                margin: 0px 10px;
+
+                @include mixins.mobile {
+                    width: auto;
+                    height: auto;
+                    margin: 10px 0px;
+                }
+            }
+            .information {
+                width: 50%;
+                padding: 0px 30px;
+
+                @include mixins.touch {
+                    width: 100%;
+                    padding: 0px 20px;
+                }
+            }
+        }
+        .arrow {
+            cursor: pointer;
+        }
+    }
+}

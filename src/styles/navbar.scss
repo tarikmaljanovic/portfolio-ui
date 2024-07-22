@@ -1,0 +1,43 @@
+@use 'bulma/sass/utilities/mixins';
+@import 'bulma';
+
+nav {
+    background-color: transparent;
+    box-shadow: none;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .nav-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        width: 70%;
+
+        @include mixins.mobile {
+            width: 100%;
+            padding: 10px;
+            justify-content: space-around;
+        }
+
+        li {
+            a { 
+                color: white;
+                font-size: 1.2rem;
+                font-weight: 500;
+                text-transform: uppercase;
+                transition: color 0.3s;
+
+                @include mixins.mobile {
+                    font-size: 1rem;
+                }
+            }
+            .underline {
+                height: 2px;
+                background-color: white;
+            }
+        }
+    }
+}

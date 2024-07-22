@@ -1,0 +1,103 @@
+@use 'bulma/sass/utilities/mixins';
+@import 'bulma';
+
+.footer-section {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 50px;
+    background-color: #101219;
+
+    @include mixins.touch {
+        padding: 20px;
+    }
+
+    .contact-section {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+
+        @include mixins.touch {
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+    
+            @include mixins.touch {
+                margin-top: 30px;
+            }
+            
+            .contact-item {
+                margin-bottom: 20px;
+                color: #fff;
+                font-size: 1.2rem;
+                display: flex;
+                align-items: center;
+    
+                @include mixins.mobile {
+                    font-size: 18px;
+                }
+    
+                svg {
+                    margin-right: 10px;
+                    width: 30px;
+                    height: 30px;
+                }
+    
+                a {
+                    color: #59ecc9;
+                    text-decoration: none;
+                }
+            }
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            width: 30%;
+
+            @include mixins.touch {
+                width: 100%;
+                margin-top: 30px;
+            }
+
+            .user-info {
+                display: flex;
+                flex-direction: row;
+                padding: 10px;
+
+                @include mixins.touch {
+                    flex-direction: column;
+                }
+
+                div {
+                    margin: 0px 10px;
+
+                    @include mixins.touch {
+                        margin: 10px 0px;
+                    }
+                }
+            }
+
+            .message {
+                width: 100%;
+                padding: 0px 20px;
+
+                @include mixins.touch {
+                    padding: 0px 10px
+                }
+            }
+        }
+    }
+}

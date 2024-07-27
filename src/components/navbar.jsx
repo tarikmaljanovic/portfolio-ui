@@ -39,7 +39,12 @@ export default function Navbar() {
                     onMouseEnter={() => setUnderline3(true)}
                     onMouseLeave={() => setUnderline3(false)}
                 >
-                    <Link to='/'>Contact</Link>
+                    <Link onClick={() => {
+                        window.scrollTo({
+                            top: document.body.scrollHeight,
+                            behavior: 'smooth'
+                        })
+                    }}>Contact</Link>
                     <motion.div 
                         className='underline'
                         animate={{

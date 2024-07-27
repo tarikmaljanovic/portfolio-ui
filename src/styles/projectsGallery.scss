@@ -1,0 +1,14 @@
+@use 'bulma/sass/utilities/mixins';
+@import 'bulma';
+
+.projects-container {
+    width: 100%;
+
+    .project-card {
+        background-color: transparent;
+        border: 1px solid white;
+        border-radius: 25px;
+
+
+    }
+}

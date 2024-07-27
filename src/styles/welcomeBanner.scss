@@ -9,7 +9,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 50px;
+    padding: 40px;
 
     @include mixins.touch {
         width: 100%;
@@ -46,8 +46,9 @@
             margin-top: 100px;
         }
 
-        @include mixins.touch {
+        @include mixins.tablet-only {
             padding: 0px 20px;
+            margin-left: -100px;
         }
 
         @include mixins.mobile {

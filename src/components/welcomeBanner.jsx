@@ -23,7 +23,10 @@ export default function WelcomeBanner() {
                     border: '1px solid white',
                     marginTop: '1rem'
                 }} onClick={() => {
-                    
+                    window.scrollTo({
+                        top: document.body.scrollHeight,
+                        behavior: 'smooth'
+                    });
                 }}>Contact Me</Button>
             </div>
         </div>

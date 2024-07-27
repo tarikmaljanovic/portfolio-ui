@@ -3,8 +3,6 @@ import { Title } from './styledComponents';
 import EmailIcon from '@mui/icons-material/Email';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import Input from '@mui/joy/Input';
-import { Textarea } from '@mui/joy';
 import Button from '@mui/joy/Button';
 
 export default function Footer() {
@@ -13,26 +11,41 @@ export default function Footer() {
             <Title>Contact Me</Title>
             <div className='contact-section'>
                 <div className='contact-info'>
-                    <p className='contact-item'><EmailIcon/>Email: <a href='mailto:tarikmaljanovic123@gmail.com'>tarikmaljanovic123@gmail.com</a></p>
-                    <p className='contact-item'><LinkedInIcon/>LinkedIn: <a href='https://www.linkedin.com/in/tarik-maljanovic/'>tarik-maljanovic</a></p>
-                    <p className='contact-item'><GitHubIcon/>GitHub: <a href='https://github.com/tarikmaljanovic'>tarikmaljanovic</a></p>
+                    <p className='contact-item'><EmailIcon/><span className='item-text'>Email: </span><a href='mailto:tarikmaljanovic123@gmail.com'>tarikmaljanovic123@gmail.com</a></p>
+                    <p className='contact-item'><LinkedInIcon/><span className='item-text'>LinkedIn: </span><a href='https://www.linkedin.com/in/tarik-maljanovic/'>tarik-maljanovic</a></p>
+                    <p className='contact-item'><GitHubIcon/><span className='item-text'>GitHub: </span><a href='https://github.com/tarikmaljanovic'>tarikmaljanovic</a></p>
                 </div>
                 <div className='contact-form'>
                     <div className='user-info'>
-                        <Input type='text' placeholder="Full Name" variant="outlined" />
-                        <Input type='email' placeholder="Email" variant="outlined" />
+                        <div style={{marginRight: '10px'}} className="field">
+                            <label className="label">Name</label>
+                            <div className="control">
+                                <input className="input" type="text" placeholder="Your Full Name"/>
+                            </div>
+                        </div>
+                        <div className="field">
+                            <label className="label">Email</label>
+                            <div className="control">
+                                <input className="input" type="email" placeholder="example@email.com"/>
+                            </div>
+                        </div>
                     </div>
                     <div className='message'>
-                        <Textarea placeholder="Enter your message here..." variant="outlined" minRows={3} />
+                    <div className="field">
+                            <label className="label">Message</label>
+                            <div className="control">
+                            <textarea className="textarea" placeholder="..."></textarea>
+                            </div>
+                        </div>
                     </div>
                     <Button style={{
                             backgroundColor: 'transparent',
                             color: 'white',
                             border: '1px solid white',
-                            marginLeft: '20px'
+
                         }} onClick={() => {
                             
-                        }}>Contact Me</Button>
+                        }}>Send</Button>
                 </div>
             </div>
         </footer>

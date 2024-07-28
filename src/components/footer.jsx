@@ -34,7 +34,7 @@ export default function Footer() {
                     <div className="field">
                             <label className="label">Message</label>
                             <div className="control">
-                            <textarea className="textarea" placeholder="..."></textarea>
+                            <textarea className="textarea" placeholder="Your message..."></textarea>
                             </div>
                         </div>
                     </div>

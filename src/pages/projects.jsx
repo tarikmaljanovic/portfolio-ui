@@ -2,19 +2,20 @@ import '../styles/root.scss'
 import '../styles/projectsGallery.scss'
 import Navbar from "../components/navbar"
 import Footer from "../components/footer"
-import Card from '@mui/joy/Card'
-import CardContent from '@mui/joy/CardContent'
-import { Subtitle, Paragraph } from '../components/styledComponents'
-import Grid from '@mui/joy/Grid'
+import { Subtitle, Title } from '../components/styledComponents'
+import { Button, CircularProgress } from '@mui/joy'
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { motion } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 
 export default function Projects() {
     const queryClient = useQueryClient()
+    const navigate = useNavigate()
 
     const {isPending, data, error} = useQuery({
         queryKey: ['projects'],
         queryFn: async () => {
-            const response = await fetch('http://localhost:3000/projects')
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/projects`)
             if (!response.ok) {
                 throw new Error('Network response was not ok')
             }
@@ -22,45 +23,51 @@ export default function Projects() {
         },
     })
 
+    if(isPending) {
+        return (
+            <div className='root-container'>
+                <Navbar />
+                <div className='project-container'>
+                    <Title>Loading…</Title>
+                </div>
+                <Footer />
+            </div>
+        )
+    }
+
+    if(error) {
+        return (
+            <div className='root-container'>
+                <Navbar />
+                <div className="notification is-danger">
+                    There was an error: {error.message}
+                </div>
+                <Footer />
+            </div>
+        )
+    }
+
     return (
         <div className="root-container">
             <Navbar />
-            <Grid container spacing={3} className="projects-container" sx={{padding: '20px'}}>
+            <div className='projects-container'>
                 {
                     isPending ? (
-                        <Grid item xs={12} sm={12} md={12}>
-                            <Card className='project-card'>
-                                <CardContent>
-                                    <Subtitle>Loading...</Subtitle>
-                                    <Paragraph>Please wait while we load the projects.</Paragraph>
-                                </CardContent>
-                            </Card>
-                        </Grid>
+                        <Button color='neutral' variant='outlined' startDecorator={<CircularProgress variant="solid" color='neutral' />}><span style={{color: 'white'}}>Loading…</span></Button>
                     ) : error ? (
-                        <Grid item xs={12} sm={12} md={12}>
-                            <Card className='project-card'>
-                                <CardContent>
-                                    <Subtitle>Error</Subtitle>
-                                    <Paragraph>There was an error loading the projects.</Paragraph>
-                                </CardContent>
-                            </Card>
-                        </Grid>
+                        <div className="notification is-danger">
+                            There was an error: {error.message}
+                        </div>
                     ) : (
-                        data.map((project) => {
-                            return (
-                                <Grid item xs={12} sm={12} md={4}>
-                                    <Card className='project-card'>
-                                        <CardContent>
-                                            <Subtitle $link>{project.title}</Subtitle>
-                                            <Paragraph>{project.description}</Paragraph>
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-                            )
-                        })
+                        data?.map(project => (
+                            <motion.div key={project._id} whileHover={{scale: 1.06}} transition={{type: "spring", stiffness: 400, damping: 10}} className='project-card' onClick={() => navigate(`/projects/${project._id}`)}>
+                                <img src={project.images[0]} alt={project.title} />
+                                <Subtitle $link>{project.title}</Subtitle>
+                            </motion.div>
+                        ))
                     )
                 }
-            </Grid>
+            </div>
             <Footer />
         </div>
     )

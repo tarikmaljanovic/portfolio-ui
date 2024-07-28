@@ -16,7 +16,7 @@ export default function ProjectsCarousel() {
     const {isPending, data, error} = useQuery({
         queryKey: ['projects'],
         queryFn: async () => {
-            const response = await fetch('http://localhost:3000/projects')
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/projects`)
             if (!response.ok) {
                 throw new Error('Network response was not ok')
             }
@@ -35,7 +35,7 @@ export default function ProjectsCarousel() {
             })
         }, 8000)
         return () => clearInterval(intervalRef.current)
-    }, [intervalRef, data])
+    }, [currentIndex])
     
     return(
         <div className='projects-carousel'>

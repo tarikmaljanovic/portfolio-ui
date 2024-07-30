@@ -8,7 +8,6 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 
 
@@ -101,26 +100,32 @@ export default function Project() {
                             })
                         }
                     </div>
-                    <Subtitle>Key Features:</Subtitle>
-                        <ul className='key-features-list'>
-                            {
-                                data?.key_features?.map(feature => (
-                                    <div key={feature} className='key-feature'>
-                                        <ArrowRightIcon className='key-feature-icon' />
-                                        <li key={feature}>{feature}</li>
-                                    </div>
-                                ))
-                            }
-                       </ul>
-                       <Subtitle>Links:</Subtitle>
-                       {
-                            data?.github_link?.map(link => (
-                                 <div key={link} className='link'>
-                                    <GitHubIcon className='link-svg'/>
-                                    <a href={link} target='_blank' rel='noreferrer'>{link}</a>
-                                </div>
-                            ))
-                       }
+                    {
+                        data?.key_features?.length > 0 ? (
+                            <>
+                                <Subtitle>Key Features:</Subtitle>
+                                <ul className='key-features-list'>
+                                    {
+                                        data?.key_features?.map(feature => (
+                                            <div key={feature} className='key-feature'>
+                                                <ArrowRightIcon className='key-feature-icon' />
+                                                <li key={feature}>{feature}</li>
+                                            </div>
+                                        ))
+                                    }
+                                </ul>
+                            </>
+                        ) : null
+                    }
+                    <Subtitle>Links:</Subtitle>
+                    {
+                        data?.github_link?.map(link => (
+                                <div key={link} className='link'>
+                                <GitHubIcon className='link-svg'/>
+                                <a href={link} target='_blank' rel='noreferrer'>{link}</a>
+                            </div>
+                        ))
+                    }
                 </div>
             </div>
             <Footer />

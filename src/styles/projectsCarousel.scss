@@ -38,6 +38,7 @@
                 width: 540px;
                 height: 350px;
                 margin: 0px 10px;
+                object-fit: cover;
 
                 @include mixins.mobile {
                     width: auto;

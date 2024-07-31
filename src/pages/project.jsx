@@ -3,33 +3,51 @@ import '../styles/projectPage.scss'
 import Navbar from "../components/navbar"
 import Footer from "../components/footer"
 import { Title, Subtitle, Paragraph } from '../components/styledComponents'
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { useState } from 'react'
+import { getProject } from '../api/projectAPI'
+import Box from '@mui/material/Box';
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialIcon from '@mui/material/SpeedDialIcon';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Button from '@mui/joy/Button';
+import FormControl from '@mui/joy/FormControl';
+import FormLabel from '@mui/joy/FormLabel';
+import Input from '@mui/joy/Input';
+import Modal from '@mui/joy/Modal';
+import ModalDialog from '@mui/joy/ModalDialog';
+import DialogTitle from '@mui/joy/DialogTitle';
+import DialogContent from '@mui/joy/DialogContent';
+import Stack from '@mui/joy/Stack';
+import { Textarea } from '@mui/joy'
+
 
 
 export default function Project() {
-    const queryClient = useQueryClient()
     const [currentImage, setCurrentImage] = useState(0)
+    const [open, setOpen] = useState({
+        edit: true,
+        delete: false
+    })
+    const actions = [
+        { icon: <EditIcon />, name: 'Edit' },
+        { icon: <DeleteIcon />, name: 'Delete' },
+    ]
+    let colors = ['#59ecc9', '#f7b801', '#f18701', '#f35b04', '#f02e65', '#40407a', '#706fd3']
 
     const {isPending, data, error} = useQuery({
-        queryKey: ['project'],
+        queryKey: ['project', window.location.pathname.split('/')[2]],
         queryFn: async () => {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/projects/${(window.location.pathname).split('/').pop()}`)
-            if (!response.ok) {
-                throw new Error('Network response was not ok')
-            }
-            return response.json()
-        },
-        retry: 5,
-        retryDelay: 2000,
-        cacheTime: 1000 * 60 * 60,
+            return await getProject(window.location.pathname.split('/')[2])
+        }
     })
 
-    let colors = ['#59ecc9', '#f7b801', '#f18701', '#f35b04', '#f02e65', '#40407a', '#706fd3']
 
     if(isPending) {
         return (
@@ -71,7 +89,7 @@ export default function Project() {
                         }}
                     />
                     <img
-                        src={data?.images[currentImage]}
+                        src={data?.images?.[currentImage]}
                         alt={data?.title}
                     />
                     <ArrowForwardIosIcon
@@ -129,6 +147,60 @@ export default function Project() {
                 </div>
             </div>
             <Footer />
+            <Box sx={{ height: 320, transform: 'translateZ(0px)', flexGrow: 1, display: 'flex', alignSelf: 'flex-end' }}>
+                <SpeedDial
+                    ariaLabel="SpeedDial basic example"
+                    sx={{ position: 'absolute', bottom: 16, right: 16 }}
+                    icon={<SpeedDialIcon />}
+                >
+                    {actions.map((action) => (
+                    <SpeedDialAction
+                        key={action.name}
+                        icon={action.icon}
+                        tooltipTitle={action.name}
+                    />
+                    ))}
+                </SpeedDial>
+            </Box>
+            <Modal open={open.edit} onClose={() => setOpen({...open, edit: false})}>
+                <ModalDialog sx={{overflow:'scroll'}}>
+                    <DialogTitle>Create new project</DialogTitle>
+                    <DialogContent>Fill in the information of the project.</DialogContent>
+                    <form>
+                        <Stack spacing={2}>
+                            <FormControl>
+                                <FormLabel>Title</FormLabel>
+                                <Input autoFocus />
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Description</FormLabel>
+                                <Textarea />
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Detailed Description</FormLabel>
+                                <Textarea />
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Technologies</FormLabel>
+                                <Textarea />
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Description</FormLabel>
+                                <Input type='file'/>
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Key Features</FormLabel>
+                                <Textarea />
+                            </FormControl>
+                            <FormControl>
+                                <FormLabel>Github Links</FormLabel>
+                                <Textarea />
+                            </FormControl>
+                            <Button>Submit</Button>
+                        </Stack>
+                    </form>
+                </ModalDialog>
+            </Modal>
         </div>
     )
 }

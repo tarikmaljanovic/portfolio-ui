@@ -5,23 +5,17 @@ import { useState, useRef, useEffect } from 'react'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CallMadeIcon from '@mui/icons-material/CallMade';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom'
+import { getProjects } from '../api/projectAPI';
 
 export default function ProjectsCarousel() {
     const [currentIndex, setCurrentIndex] = useState(0)
     const intervalRef = useRef(null)
-    const queryClient = useQueryClient()
 
     const {isPending, data, error} = useQuery({
         queryKey: ['projects'],
-        queryFn: async () => {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/projects`)
-            if (!response.ok) {
-                throw new Error('Network response was not ok')
-            }
-            return response.json()
-        },
+        queryFn: getProjects
     })
 
     useEffect(() => {

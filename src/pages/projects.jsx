@@ -4,23 +4,17 @@ import Navbar from "../components/navbar"
 import Footer from "../components/footer"
 import { Subtitle, Title } from '../components/styledComponents'
 import { Button, CircularProgress } from '@mui/joy'
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
+import { getProjects } from '../api/projectAPI'
 
 export default function Projects() {
-    const queryClient = useQueryClient()
     const navigate = useNavigate()
 
     const {isPending, data, error} = useQuery({
         queryKey: ['projects'],
-        queryFn: async () => {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/projects`)
-            if (!response.ok) {
-                throw new Error('Network response was not ok')
-            }
-            return response.json()
-        },
+        queryFn: getProjects
     })
 
     if(isPending) {
